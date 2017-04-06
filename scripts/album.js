@@ -1,4 +1,6 @@
- var albumPicasso = {
+var clickCount = 0; // sets a click counter to know what album to cycle to.
+
+var albumPicasso = {
      title: 'The Colors',
      artist: 'Pablo Picasso',
      label: 'Cubism',
@@ -26,6 +28,21 @@
          { title: 'Fits in your pocket', duration: '3:21'},
          { title: 'Can you hear me now?', duration: '3:14' },
          { title: 'Wrong phone number', duration: '2:15'}
+     ]
+ };
+
+ var albumEdison = {
+     title: 'Let the Light Shine',
+     artist: 'Thomas Edison',
+     label: 'EELC',
+     year: '1878',
+     albumArtUrl: 'assets/images/album_covers/20.png',
+     songs: [
+         { title: 'Why is it so dark?', duration: '1:01' },
+         { title: 'Carbon is the key', duration: '5:01' },
+         { title: 'If at first you don\'t succeed...', duration: '3:21'},
+         { title: 'DC/AC', duration: '3:14' },
+         { title: 'You ought to be in pictures', duration: '2:15'}
      ]
  };
 
@@ -62,6 +79,27 @@ var setCurrentAlbum = function(album) {
         
     }
 };
+
+
+//
+// Assignment code here. Sets a mouse click listener to the class of 
+// the album image, when it fires, the AF increments the clickCount,
+// then checks the modulus 3 value to determine which album to show.
+// 
+
+document.getElementsByClassName('album-cover-art')[0].addEventListener('click', function (event) {
+    clickCount++;
+    if (clickCount%3==0){
+        setCurrentAlbum(albumPicasso);
+    }
+    else if (clickCount%3 == 1) {
+        setCurrentAlbum(albumMarconi);
+    }
+    else {
+        setCurrentAlbum(albumEdison);
+    }
+        
+});
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
