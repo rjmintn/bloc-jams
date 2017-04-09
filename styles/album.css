@@ -76,6 +76,8 @@ body.album {
     line-height: 28px;
 }
 
+
+
 @media (max-width: 640px) and (min-width: 320px) {
     .album-view-details {
         text-align: center;
