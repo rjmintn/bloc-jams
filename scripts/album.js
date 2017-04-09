@@ -85,6 +85,10 @@ var getSongItem = function (element) {
         case 'song-item-duration':
             return findParentByClassName(element, 'album-view-song-item').querySelector('.song-item-number');
         case 'song-item-number':
+<<<<<<< HEAD
+=======
+            return element;
+>>>>>>> checkpoint-13-dom-scripting-play-pause-pt2
         default :
             return;
     }
