@@ -66,9 +66,20 @@ var setCurrentAlbum = function(album) {
 var findParentByClassName = function(element, targetClass) {
     if (element) {
         var currentParent = element.parentElement;
+        
+        if (currentParent === null) {
+            console.log("No Parent found");
+            return element;
+        }
+        
         while (currentParent.className !== targetClass && currentParent.className !== null) {
             currentParent = currentParent.parentElement;
+            if (currentParent.parentElement === null) { 
+                console.log("No parent found with that class name");
+                return element;
+            }
         }
+        
         return currentParent;
     }
 };
@@ -85,10 +96,7 @@ var getSongItem = function (element) {
         case 'song-item-duration':
             return findParentByClassName(element, 'album-view-song-item').querySelector('.song-item-number');
         case 'song-item-number':
-<<<<<<< HEAD
-=======
             return element;
->>>>>>> checkpoint-13-dom-scripting-play-pause-pt2
         default :
             return;
     }
@@ -156,9 +164,9 @@ window.onload = function() {
             }
         });
         
-        songRows[i].addEventListener('click', function(event) {
+/*        songRows[i].addEventListener('click', function(event) {
             clickHandler(event.target)
-        });
+        });*/
     }
 };
 
