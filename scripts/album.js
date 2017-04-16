@@ -38,8 +38,35 @@ var createSongRow = function(songNumber, songName, songLength) {
         '</tr>'
     ;
     
-    return $(template);
+    var $row = $(template);
+    
+    var clickHandler = function() {
+//        songRows[i].addEventListener('click', function(event) {
+//            clickHandler(event.target)
+//        });
+    };
+    
+    var onHover = function(event) {
         
+        var cell = $(this).find('.song-item-number');
+        var songNum = cell.attr('data-song-number');
+        
+        if (songNum !== currentlyPlayingSong)  {
+            cell.html(playButtonTemplate);
+        }
+    };
+    
+    var offHover = function(event) {
+        var songItem = getSongItem(event.target);
+            var songItemNumber = songItem.getAttribute('data-song-number');
+            if (songItemNumber !== currentlyPlayingSong) {
+                songItem.innerHTML = songItemNumber;
+            }
+    };
+    
+    $row.find('.song-item-number').click(clickHandler);
+    $row.hover(onHover, offHover);
+    return $row;        
 };
 
 var setCurrentAlbum = function(album) {
@@ -117,46 +144,13 @@ var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause">
 
 var currentlyPlayingSong = null;
 
-window.onload = function() {
+$(document).ready( function() {
     setCurrentAlbum(albumPicasso);
-    songListContainer.addEventListener('mouseover',function(event) {
-        if (event.target.parentElement.className==='album-view-song-item' && event.target.parentElement.querySelector('.song-item-number').innerHTML !== pauseButtonTemplate) {
-            event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
-        }
-        
-    });
-
-    
-// Third attempt using switch insead of if-else. WHY?!?!    
-     
-/*    songListContainer.addEventListener('click',function(event) {
-        var eventTarget;
-        
-        if (event.target.className !== 'song-item-number') {
-            findParentByClassName(event.target, 'song-item-number').querySelector('.song-item-number').innerHTML = pauseButtonTemplate;
-        } else {
-            event.target.innerHTML = pauseButtonTemplate;
-        }
-    };
-        
-        pauseButton();
-    });*/
-    
-    
     for (var i=0; i < songRows.length; i++) {
-        songRows[i].addEventListener('mouseleave', function(event) {
-            var songItem = getSongItem(event.target);
-            var songItemNumber = songItem.getAttribute('data-song-number');
-            if (songItemNumber !== currentlyPlayingSong) {
-                songItem.innerHTML = songItemNumber;
-            }
-        });
         
-        songRows[i].addEventListener('click', function(event) {
-            clickHandler(event.target)
-        });
+
     }
-};
+});
 
 
 // Second Attempt using provided findParentByClassName solution

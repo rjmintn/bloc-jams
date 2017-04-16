@@ -150,7 +150,7 @@
     }
     .player-bar .main-controls,
     .player-bar .currently-playing,
-    .player-bar . volume {
+    .player-bar .volume {
         display: block;
         margin: 0 auto;
         padding: 0;
