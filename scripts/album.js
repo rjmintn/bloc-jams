@@ -24,10 +24,13 @@ var createSongRow = function(songNumber, songName, songLength) {
             currentSongFromAlbum = currentAlbum.songs[songNumber-1];
             updatePlayerBarSong();
         } else if (currentlyPlayingSongNumber === songNumber) {
-            $(this).html(playButtonTemplate);
-            $('.main-controls .play-pause').html(playerBarPlayButton);
-            currentlyPlayingSongNumber = null;
-            currentSongFromAlbum = null;
+            if ($('.main-controls .play-pause').html() == playerBarPlayButton){
+                $(this).html(pauseButtonTemplate);
+                $('.main-controls .play-pause').html(playerBarPauseButton);
+            } else {
+                $(this).html(playButtonTemplate);
+                $('.main-controls .play-pause').html(playerBarPlayButton);
+            }
         }
     };
 
