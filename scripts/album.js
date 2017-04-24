@@ -189,7 +189,7 @@ var setupSeekBars = function() {
             var offsetX = event.pageX - $seekBar.offset().left;
             var barWidth = $seekBar.width();
             var seekBarFillRatio = offsetX / barWidth;
-            if ($(".seek-control")) {
+            if ($seekBar.parent().hasClass('seek-control')) {
                 seek(currentSoundFile.getDuration() * seekBarFillRatio);
             } else {
                 setVolume(Math.round(seekBarFillRatio * 100));
@@ -213,9 +213,9 @@ var updateSeekBarWhileSongPlays = function() {
             updateSeekPercentage($seekBar, seekBarFillRatio);
             setCurrentTimeInPlayerBar(this.getTime());
         });
-/*        currentSoundFile.bind('ended', function(event) {
+        currentSoundFile.bind('ended', function(event) {
             nextSong();
-        });*/ 
+        }); 
     }
 };
 
