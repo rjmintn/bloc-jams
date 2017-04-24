@@ -20,7 +20,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         }
         if (currentlyPlayingSongNumber !== songNumber) {
             $(this).html(pauseButtonTemplate);
-            setSong((songNumber));
+            setSong(songNumber);
             currentSoundFile.play();
             $(".seek-bar .fill").css("width", currentVolume);
             $(".seek-bar .thumb").css("left", currentVolume);
@@ -89,33 +89,32 @@ var trackIndex = function(album, song) {
 
 var nextSong = function() {
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-    var previousPlayingSongNumber = currentlyPlayingSongNumber;
+    var lastSongNumber = currentlyPlayingSongNumber;
     currentSongIndex++;
 
     if (currentSongIndex >= currentAlbum.songs.length){
         currentSongIndex = 0;
     }
-    setSong(currentSongIndex);
+    setSong(currentSongIndex +1);
     currentSoundFile.play();
     updatePlayerBarSong();
     updateSeekBarWhileSongPlays();
     getSongNumberCell(currentlyPlayingSongNumber).html(pauseButtonTemplate);
-    getSongNumberCell(previousPlayingSongNumber).html(previousPlayingSongNumber);
+    getSongNumberCell(lastSongNumber).html(lastSongNumber);
 };
 
 var previousSong = function() {
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-    var nextPlayingSongNumber = currentlyPlayingSongNumber;
-    currentSongIndex--;
-        if (currentSongIndex < 0) {
-    currentSongIndex = currentAlbum.songs.length - 1;
+    var lastSongNumber = currentlyPlayingSongNumber;
+    if (currentSongIndex <= 0) {
+        currentSongIndex = currentAlbum.songs.length;
     }
     setSong(currentSongIndex);
     currentSoundFile.play();
     updatePlayerBarSong();
     updateSeekBarWhileSongPlays();
     getSongNumberCell(currentlyPlayingSongNumber).html(pauseButtonTemplate);
-getSongNumberCell(nextPlayingSongNumber).html(nextPlayingSongNumber);
+    getSongNumberCell(lastSongNumber).html(lastSongNumber);
 };
 
 var updatePlayerBarSong = function() {
@@ -131,7 +130,7 @@ var setSong = function (songNumber) {
     if (currentSoundFile) {
         currentSoundFile.stop();
     }
-    currentlyPlayingSongNumber = songNumber;
+    currentlyPlayingSongNumber = parseInt(songNumber);
     currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
     currentSoundFile = new buzz.sound(currentSongFromAlbum.audioUrl, {
         formats: ['mp3'],
@@ -189,7 +188,7 @@ var setupSeekBars = function() {
             var offsetX = event.pageX - $seekBar.offset().left;
             var barWidth = $seekBar.width();
             var seekBarFillRatio = offsetX / barWidth;
-            if ($(".seek-control")) {
+            if ($seekBar.parent().hasClass("seek-control")) {
                 seek(currentSoundFile.getDuration() * seekBarFillRatio);
             } else {
                 setVolume(Math.round(seekBarFillRatio * 100));
